@@ -7,7 +7,7 @@ export default class Recipe extends BaseObject {
     perishtime   : number;
     foodtype     : string;
     maxmix       : any;
-    maxtagsd     : any;
+    maxtags      : any;
     cooktime     : number;
     priority     : number;
     hunger       : number;
@@ -30,11 +30,47 @@ export default class Recipe extends BaseObject {
         this.generate(needle, haystack, false);
     }
 
+    get maxNames() {
+        return this.maxnames;
+    }
+
+    get minTags() {
+        return this.mintags;
+    }
+
+    get minNames() {
+        return this.minnames;
+    }
+
+    get minList() {
+        return this.minlist;
+    }
+
+    get minMix() {
+        return this.minmix;
+    }
+
+    get maxTags() {
+        return this.maxtags;
+    }
+
+    get cookTime() {
+        return this.cooktime;
+    }
+
+    get maxMix() {
+        return this.maxmix;
+    }
+
     get cookerName() {
         return this.cookername;
     }
 
-    set cookerName(v) {
-        this.cookername = v
+    get foodType() {
+        return this.foodType;
+    }
+
+    get perishTime() {
+        return this.perishtime;
     }
 }
