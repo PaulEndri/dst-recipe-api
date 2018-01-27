@@ -1,12 +1,15 @@
 import BaseObject from './_baseObject';
-import recipes from '../data/recipes';
-import waiterRecipes from '../data/waiterRecipes';
+const recipes = require('../data/recipes');
+const waiterRecipes = require('../data/waiterRecipes');
 
 export default class Recipe extends BaseObject {
     cookername   : string;
     perishtime   : number;
     foodtype     : string;
-    maxmix       : any;
+    maxmix       : {
+       amt : number,
+       tag : string 
+    }[];
     maxtags      : any;
     cooktime     : number;
     priority     : number;
@@ -15,7 +18,10 @@ export default class Recipe extends BaseObject {
     sanity       : number;
     maxnames     : any;
     minmix       : any;
-    minlist      : any;
+    minlist      : {
+        tags  : any,
+        names : any
+    }[];
     name         : string;
     times_cooked : number;
     minnames     : any;
@@ -72,5 +78,16 @@ export default class Recipe extends BaseObject {
 
     get perishTime() {
         return this.perishtime;
+    }
+
+    static getAll(waiter: boolean = false) {
+        let source  = waiter ? waiterRecipes : recipes;
+        let results = new Array<Recipe>();
+
+        for(var key of Object.keys(source)) {
+            results.push(new Recipe(source));
+        }
+
+        return results;
     }
 }

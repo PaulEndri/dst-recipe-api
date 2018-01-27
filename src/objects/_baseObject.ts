@@ -13,5 +13,7 @@ export default abstract class BaseObject {
                 this[key] = object[key];
             }
         }
+
+        return null;
     }
 }

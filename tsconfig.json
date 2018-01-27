@@ -1,14 +1,15 @@
 {
     "compilerOptions": {
-        "target": "es5",
+        "module": "commonjs",
+        "target": "es2015",
         "noImplicitAny": false,
         "removeComments": true,
         "preserveConstEnums": true,
         "outDir": "lib",
-        "allowJs": true
+        "allowJs": true,
     },
     "exclude": [
         "node_modules",
-        "data"
+        "lib"
     ]
 }
