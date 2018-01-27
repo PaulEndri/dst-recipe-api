@@ -10,7 +10,10 @@ export default class Ingredient extends BaseObject {
 
     constructor(needle, waiter=false) {
         super();
-        let haystack = waiter ? ingredients : waiterIngredients;
+
+        this.tags    = new Array<Tag>();
+        this.count   = 0;
+        let haystack = waiter ? ingredients: waiterIngredients;
         let result   = this.generate(needle, haystack, true);
 
         if(!result) {
