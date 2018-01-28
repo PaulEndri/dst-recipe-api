@@ -24,12 +24,21 @@ export default class Crockpot
         return this;
     }
 
-    public remove(name: string, quanity: number = 1)
+    public remove(name: string, quantity: number = 1)
     {
-        let ingredient = this.ingredients.find(i => i._name === name);
-
+        let ingredient = this.ingredients
+        let removed = 0;
         if(ingredient !== null) {
-            this.ingredients = this.ingredients.filter(i => i._name !== name);
+            let tmp = this.ingredients.map(i => {
+                if(removed < quantity && i._name === name) {
+                    return null;
+                }
+
+                return i;
+            }).filter(i => i !== null);
+
+            this.ingredients = tmp;
+
         }
 
         return this;
@@ -59,7 +68,7 @@ export default class Crockpot
     public calculateResult()
     {
         let tagList = {};
-        let ingList = [];
+        let ingList = {};
         let results = [];
 
         for(let i of this.ingredients) {
@@ -72,8 +81,10 @@ export default class Crockpot
             }
 
             
-            if(!ingList.find(il => il._name === i._name)) {
-                ingList.push(i._name);
+            if(isNullOrUndefined(ingList[i._name])) {
+                ingList[i._name] = 1;
+            } else {
+                ingList[i._name] += 1
             }
         }
 
@@ -84,18 +95,24 @@ export default class Crockpot
         results = this
             .recipes
             .filter(r => {
-                for(let list of r.minList) {
+                let listResults = r.minList.map(list => {
                     for(let tag in list.tags) {
                         if(isNullOrUndefined(tagList[tag]) || tagList[tag] < list.tags[tag]) {
                             return false;
                         }
                     }
 
-                    for(let name in list.names) {
-                        if(!ingList.find(i => i === name)) {
+                    for(let name of Object.keys(list.names)) {
+                        if(isNullOrUndefined(ingList[name]) || ingList[name] < list.names[name]) {
                             return false;
                         }
                     }
+
+                    return list;
+                }).filter( Boolean );
+
+                if(listResults.length <= 0) {
+                    return false;
                 }
 
                 for(let maxMix of r.maxMix) {
@@ -105,7 +122,7 @@ export default class Crockpot
                 }
             
                 for(let badName of Object.keys(r.maxnames)) {
-                    if(ingList.find(i => i === badName)) {
+                    if(!isNullOrUndefined(ingList[badName])) {
                         return false;
                     }
                 }
