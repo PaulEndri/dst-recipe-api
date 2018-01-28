@@ -1,6 +1,6 @@
 {
   "name": "@paulendri/dst-crockpot-companion-tool",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A simple library for getting recipes/ingredients for Don't Starve Totgether",
   "main": "lib/index.js",
   "scripts": {
