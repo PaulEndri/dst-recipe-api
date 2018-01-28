@@ -13,6 +13,8 @@ export default class Crockpot
     {
         this.waiterEnabled = waiter;
         this.recipes = Recipe.getAll(waiter);
+        this.ingredients = new Array<Ingredient>();
+        this.history = new Array<Recipe>();
     }
 
     public add(name: string)
