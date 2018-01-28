@@ -23,7 +23,7 @@ export default class Ingredient extends BaseObject {
         }
 
         for(let key of Object.keys(result.tags)) {
-            this.tags.push(new Tag(key, result[key]));
+            this.tags.push(new Tag(key, result.tags[key]));
         }
 
         this.name   = result.name;
