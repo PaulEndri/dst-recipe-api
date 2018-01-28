@@ -27,7 +27,7 @@ export default class Recipe {
     health       : number;
 
     constructor(needle, waiter=false) {
-        let haystack = waiter ? recipes : waiterRecipes;
+        let haystack = waiter === true ? waiterRecipes : recipes;
 
         this.generate(needle, haystack, false);
     }
