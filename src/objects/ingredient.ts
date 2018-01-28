@@ -4,9 +4,11 @@ const ingredients       = require('../data/ingredients');
 const waiterIngredients = require('../data/waiterIngredients');
 
 export default class Ingredient extends BaseObject {
-    name : string;
-    tags : Tag[];
-    count: number;
+    name:   string;
+    tags:   Tag[];
+    count:  number;
+    _name:  string;
+    prefab: string;
 
     constructor(needle, waiter=false) {
         super();
@@ -14,9 +16,9 @@ export default class Ingredient extends BaseObject {
         this.tags    = new Array<Tag>();
         this.count   = 0;
         let haystack = waiter ? ingredients: waiterIngredients;
-        let result   = this.generate(needle, haystack, true);
+        let result   = haystack.find(h => h.prefab == needle) || false;
 
-        if(!result) {
+        if(result === false) {
             throw new Error("Invalid Ingredient");
         }
 
@@ -24,7 +26,7 @@ export default class Ingredient extends BaseObject {
             this.tags.push(new Tag(key, result[key]));
         }
 
-        this.name  = needle;
+        this._name = needle;
         this.count = 0;
     }
 
@@ -49,8 +51,8 @@ export default class Ingredient extends BaseObject {
     static getAll(waiter: boolean = false) {
         let source = waiter ? waiterIngredients : ingredients;
 
-        return Object.keys(source).map(s => {
-            return new Ingredient(s);
-        });
+        return source.map(s => {
+            return new Ingredient(s.prefab, waiter)
+        })
     }
 }

@@ -3,14 +3,14 @@ import Ingredient from './objects/ingredient';
 import Tag from './objects/tag';
 import Bag from './objects/bag';
 import Library from './services/recipes';
+import Crockpot from './objects/crockpot';
 
 var object = {
-    Objects : {
-        Recipe,
-        Ingredient,
-        Tag,
-        Bag
-    },
-    Library
+    Recipe,
+    Ingredient,
+    Tag,
+    Bag,
+    Crockpot
 };
+
 module.exports = object;

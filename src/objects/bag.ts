@@ -12,7 +12,7 @@ export default class Bag
 
     public add(name: string)
     {
-        let found = this.ingredients.find(i => i.name === name);
+        let found = this.ingredients.find(i => i._name === name);
 
         if(found) {
             found.count += 1;
@@ -23,11 +23,11 @@ export default class Bag
 
     public remove(name: string, quanity: number = 1)
     {
-        let ingredient = this.ingredients.find(i => i.name === name);
+        let ingredient = this.ingredients.find(i => i._name === name);
 
         if(ingredient !== null) {
             if(ingredient.count === quanity) {
-                this.ingredients = this.ingredients.filter(i => i.name !== name);
+                this.ingredients = this.ingredients.filter(i => i._name !== name);
             } else {
                 ingredient.count -= quanity;
             }
