@@ -31,6 +31,7 @@ export default class Crockpot
         if(ingredient !== null) {
             let tmp = this.ingredients.map(i => {
                 if(removed < quantity && i._name === name) {
+                    removed += 1;
                     return null;
                 }
 
