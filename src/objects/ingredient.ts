@@ -12,7 +12,7 @@ export default class Ingredient {
     constructor(needle, waiter=false) {
         this.tags    = new Array<Tag>();
         this.count   = 0;
-        let haystack = waiter ? ingredients: waiterIngredients;
+        let haystack = waiter === true ? waiterIngredients: ingredients;
         let result   = haystack.find(h => h.prefab == needle) || false;
 
         if(result === false) {
@@ -48,7 +48,7 @@ export default class Ingredient {
     }
 
     static getAll(waiter: boolean = false) {
-        let source = waiter ? waiterIngredients : ingredients;
+        let source = waiter === true ? waiterIngredients : ingredients;
 
         return source.map(s => {
             return new Ingredient(s.prefab, waiter)
