@@ -22,12 +22,14 @@ export default class Ingredient extends BaseObject {
             throw new Error("Invalid Ingredient");
         }
 
-        for(let key of Object.keys(result)) {
+        for(let key of Object.keys(result.tags)) {
             this.tags.push(new Tag(key, result[key]));
         }
 
-        this._name = needle;
-        this.count = 0;
+        this.name   = result.name;
+        this.prefab = result.prefab;
+        this._name  = needle;
+        this.count  = 0;
     }
 
     public hasTag(key: string) {
