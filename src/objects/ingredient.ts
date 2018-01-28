@@ -1,9 +1,8 @@
-import BaseObject from './_baseObject';
 import Tag from './tag';
 const ingredients       = require('../data/ingredients');
 const waiterIngredients = require('../data/waiterIngredients');
 
-export default class Ingredient extends BaseObject {
+export default class Ingredient {
     name:   string;
     tags:   Tag[];
     count:  number;
@@ -11,8 +10,6 @@ export default class Ingredient extends BaseObject {
     prefab: string;
 
     constructor(needle, waiter=false) {
-        super();
-
         this.tags    = new Array<Tag>();
         this.count   = 0;
         let haystack = waiter ? ingredients: waiterIngredients;

@@ -69,10 +69,11 @@ export default class Crockpot
                 } else {
                     tagList[t.type] += t.value;
                 }
+            }
 
-                if(ingList.find(il => il._name === i._name)) {
-                    ingList.push(i._name);
-                }
+            
+            if(!ingList.find(il => il._name === i._name)) {
+                ingList.push(i._name);
             }
         }
 
@@ -91,19 +92,19 @@ export default class Crockpot
                     }
 
                     for(let name in list.names) {
-                        if(ingList.find(i => i === name)) {
+                        if(!ingList.find(i => i === name)) {
                             return false;
                         }
                     }
                 }
 
                 for(let maxMix of r.maxMix) {
-                    if(!isNullOrUndefined(tagList[maxMix.tag]) && tagList[maxMix.tag] >= maxMix.amt) {
+                    if(!isNullOrUndefined(tagList[maxMix.tag]) && tagList[maxMix.tag] > maxMix.amt) {
                         return false;
                     }
                 }
             
-                for(let badName of Object.keys(r.maxNames)) {
+                for(let badName of Object.keys(r.maxnames)) {
                     if(ingList.find(i => i === badName)) {
                         return false;
                     }
@@ -112,10 +113,10 @@ export default class Crockpot
                 return true;
             })
             .sort((a: Recipe, b: Recipe) => {
-                return a.priority > b.priority ? 1 : b.priority > a.priority ? -1 : 0;
+                return a.priority < b.priority ? 1 : b.priority < a.priority ? -1 : 0;
             });
 
-        if(ingList.length === 4) {
+        if(this.ingredients.length === 4) {
             return results[0];
         }
 

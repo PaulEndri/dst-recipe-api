@@ -1,8 +1,8 @@
-import BaseObject from './_baseObject';
+import {isNullOrUndefined} from 'util';
 const recipes = require('../data/recipes');
 const waiterRecipes = require('../data/waiterRecipes');
 
-export default class Recipe extends BaseObject {
+export default class Recipe {
     cookername   : string;
     perishtime   : number;
     foodtype     : string;
@@ -18,10 +18,7 @@ export default class Recipe extends BaseObject {
     sanity       : number;
     maxnames     : any;
     minmix       : any;
-    minlist      : {
-        tags  : any,
-        names : any
-    }[];
+    minlist      : any;
     name         : string;
     times_cooked : number;
     minnames     : any;
@@ -30,7 +27,6 @@ export default class Recipe extends BaseObject {
     health       : number;
 
     constructor(needle, waiter=false) {
-        super();
         let haystack = waiter ? recipes : waiterRecipes;
 
         this.generate(needle, haystack, false);
@@ -65,7 +61,7 @@ export default class Recipe extends BaseObject {
     }
 
     get maxMix() {
-        return this.maxmix;
+        return Object.keys(this.maxmix).length ? this.maxmix : [];
     }
 
     get cookerName() {
@@ -85,9 +81,25 @@ export default class Recipe extends BaseObject {
         let results = new Array<Recipe>();
 
         for(var key of Object.keys(source)) {
-            results.push(new Recipe(source));
+            results.push(new Recipe(key));
         }
 
         return results;
+    }
+
+    generate(needle:any, haystack:any, returnVal:boolean) {
+        if(!isNullOrUndefined(haystack[needle])) {
+            let object = haystack[needle];
+
+            if(returnVal) {
+                return object;
+            }
+
+            for(let key of Object.keys(object)) {
+                this[key] = object[key];
+            }
+        }
+
+        return null;
     }
 }
